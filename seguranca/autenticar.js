@@ -7,7 +7,7 @@ export default function autenticar(requisição, resposta, next){
     if(requisição.session.autenticacao === true){
         next();
     } else{
-        resposta.redirect('/login');
+        resposta.redirect('/login2.html'); //não estou conseguindo fzr esse redirecionamento, tentei varias vezes
     
     }
 

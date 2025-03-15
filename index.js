@@ -1,22 +1,16 @@
 import express from "express";
 import autenticar from "./seguranca/autenticar.js";
 
+const porta = 3150;
+const localhost = "0.0.0.0";
 
-const porta = 3600;
-const localhost = "0.0.0.0"; // define nosso app disponível em todas interfaces de rede desse PC
+const app = express();
 
-const app = express(); // Inicializa o app primeiro!
+// Disponibiliza arquivos públicos
+app.use(express.static('./publico'));
 
-
-
-
-
-// Prepara o servidor
-// disponibilizando arquivos p/ acessar na web http://localhost:3600/index.html
-app.use(express.static("./publico"));
-
-//disponibilizando arquivos p/ privados na web
-app.use(express.static("./privado"));
+// Disponibiliza arquivos privados na raiz e protege com o middleware
+app.use(autenticar, express.static('./privado'));
 
 app.listen(porta, localhost, () => {
     console.log(`O servidor estará rodando em http://${localhost}:${porta}`);
